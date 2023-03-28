@@ -17,6 +17,7 @@ namespace ApiDotNet6.Infra.Data.Context
         public DbSet<Product> Products { get; set; }
         public DbSet<Purchase> Purchases { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<PersonImage> PersonImages { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
