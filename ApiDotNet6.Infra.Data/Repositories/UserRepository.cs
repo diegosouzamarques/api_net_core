@@ -19,9 +19,12 @@ namespace ApiDotNet6.Infra.Data.Repositories
             _appDbContext = appDbContext;
         }
 
-        public async Task<User> GetUserByEmailAndPasswordAsync(string email, string password)
+        public async Task<User?> GetUserByEmailAndPasswordAsync(string email, string password)
         {
-            return await _appDbContext.Users.FirstOrDefaultAsync(x => x.Email == email && x.Password == password);           
+            return await _appDbContext.Users
+                                      .Include(x => x.UserPermissions)
+                                      .ThenInclude(x => x.Permission)
+                                      .FirstOrDefaultAsync(x => x.Email == email && x.Password == password);           
         }
     }
 }

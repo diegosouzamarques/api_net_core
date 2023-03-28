@@ -1,3 +1,5 @@
+using ApiDotNet6.Api.Autentication;
+using ApiDotNet6.Domain.Authentication;
 using ApiDotNet6.Infra.Ioc;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -48,6 +50,8 @@ builder.Services.AddSwaggerGen(s =>
 
 builder.Services.addInfrastructure(builder.Configuration);
 builder.Services.addServices(builder.Configuration);
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<ICurrentUser, CurrentUser>();
 builder.Services.AddMvc().AddJsonOptions(options =>
 {
     options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
