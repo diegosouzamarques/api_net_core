@@ -17,7 +17,7 @@ namespace ApiDotNet6.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> SaveImage(PersonImageDTO personImageDTO)
+        public async Task<ActionResult> CreateImageBase64Async(PersonImageDTO personImageDTO)
         {
             var result = await _personImageService.CreateImageBase64Async(personImageDTO);
            if(result.IsSuccess)
@@ -26,6 +26,17 @@ namespace ApiDotNet6.Api.Controllers
            return BadRequest(result);
         }
 
-   
+        [HttpPost]
+        [Route("pathimage")]
+        public async Task<ActionResult> CreateImageAsync(PersonImageDTO personImageDTO)
+        {
+            var result = await _personImageService.CreateImageAsync(personImageDTO);
+            if (result.IsSuccess)
+                return Ok(result);
+
+            return BadRequest(result);
+        }
+
+
     }
 }
