@@ -1,5 +1,3 @@
-using ApiDotNet6.Api.Autentication;
-using ApiDotNet6.Domain.Authentication;
 using ApiDotNet6.Infra.Ioc;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -50,17 +48,17 @@ builder.Services.AddSwaggerGen(s =>
 
 builder.Services.addInfrastructure(builder.Configuration);
 builder.Services.addServices(builder.Configuration);
-builder.Services.AddHttpContextAccessor();
-builder.Services.AddScoped<ICurrentUser, CurrentUser>();
 builder.Services.AddMvc().AddJsonOptions(options =>
 {
     options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
 });
 
-var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("api_net_6_portfolio_diego_marques"));
+var key = builder.Configuration.GetSection("JwtConfig:Key").Value;
+
 builder.Services.AddAuthentication(authOptions =>
 {
     authOptions.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    authOptions.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
     authOptions.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
 }).AddJwtBearer("Bearer", options =>
 {
@@ -70,7 +68,7 @@ builder.Services.AddAuthentication(authOptions =>
 
         ValidateIssuerSigningKey = true,
         ValidateLifetime = true,
-        IssuerSigningKey = key,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key)),
         ValidateAudience = false,
         ValidateIssuer = false
     };

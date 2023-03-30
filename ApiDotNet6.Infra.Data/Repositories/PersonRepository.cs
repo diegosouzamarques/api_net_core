@@ -3,11 +3,6 @@ using ApiDotNet6.Domain.FiltersDb;
 using ApiDotNet6.Domain.Repositories;
 using ApiDotNet6.Infra.Data.Context;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ApiDotNet6.Infra.Data.Repositories
 {

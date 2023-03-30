@@ -1,14 +1,11 @@
 ﻿using ApiDotNet6.Application.DTOs;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ApiDotNet6.Application.Services.Interface
 {
     public interface IUserService
     {
-        Task<ResultService<dynamic>> GenerateTokenAsync(UserDTO userDTO);
+        Task<ResultService<UserDTO>> Register(UserDTO userDTO);
+        Task<ResultService<TokenDTO>> Signin(UserSigninDTO userSigninDTO);
+        Task<ResultService<TokenDTO>> RefreshToken(RefreshTokenDTO refreshTokenDTO);
     }
 }

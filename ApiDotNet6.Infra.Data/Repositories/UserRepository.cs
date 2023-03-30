@@ -2,11 +2,6 @@
 using ApiDotNet6.Domain.Repositories;
 using ApiDotNet6.Infra.Data.Context;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ApiDotNet6.Infra.Data.Repositories
 {
@@ -19,12 +14,38 @@ namespace ApiDotNet6.Infra.Data.Repositories
             _appDbContext = appDbContext;
         }
 
+        public async Task<User> CreateAsync(User user)
+        {
+            _appDbContext.Add(user);
+            await _appDbContext.SaveChangesAsync();
+            return user;
+        }
+
         public async Task<User?> GetUserByEmailAndPasswordAsync(string email, string password)
         {
             return await _appDbContext.Users
                                       .Include(x => x.UserPermissions)
                                       .ThenInclude(x => x.Permission)
                                       .FirstOrDefaultAsync(x => x.Email == email && x.Password == password);           
+        }
+
+        public async Task<User?> GetUserByRefreshTokenAsync(string refreshTokenDTO)
+        {
+            return await _appDbContext.Users
+                          .FirstOrDefaultAsync(x => x.RefreshToken == refreshTokenDTO);
+        }
+
+        public async Task<User?> GetUserByUsernameAsync(string username)
+        {
+            return await _appDbContext.Users
+                          .FirstOrDefaultAsync(x => x.Username == username);
+        }
+
+        public async Task<User> TokenRegisterAsync(User user)
+        {
+            _appDbContext.Update(user);
+            await _appDbContext.SaveChangesAsync();
+            return user;
         }
     }
 }

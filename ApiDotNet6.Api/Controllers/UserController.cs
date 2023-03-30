@@ -15,18 +15,44 @@ namespace ApiDotNet6.Api.Controllers
             _userService = userService;
         }
 
+
         [HttpPost]
-        [Route("token")]
-        public async Task<ActionResult> PostAsync([FromForm] UserDTO userDTO)
+        [Route("register")]
+        public async Task<ActionResult> RegisterAsync([FromForm] UserDTO userDTO)
         {
 
-            var result = await _userService.GenerateTokenAsync(userDTO);
-            if(result.IsSuccess)
+            var result = await _userService.Register(userDTO);
+            if (result.IsSuccess)
                 return Ok(result.Data);
 
             return BadRequest(result);
 
         }
 
+        [HttpPost]
+        [Route("signin")]
+        public async Task<ActionResult> SigninAsync([FromForm] UserSigninDTO userDTO)
+        {
+
+            var result = await _userService.Signin(userDTO);
+            if (result.IsSuccess)
+                return Ok(result.Data);
+
+            return BadRequest(result);
+
+        }
+
+        [HttpPost]
+        [Route("refreshtoken")]
+        public async Task<ActionResult> RefreshTokenAsync([FromForm] RefreshTokenDTO refreshTokenDTO)
+        {
+
+            var result = await _userService.RefreshToken(refreshTokenDTO);
+            if (result.IsSuccess)
+                return Ok(result.Data);
+
+            return BadRequest(result);
+
+        }
     }
 }
