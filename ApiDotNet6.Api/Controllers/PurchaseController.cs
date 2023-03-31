@@ -2,7 +2,9 @@
 using ApiDotNet6.Application.Services;
 using ApiDotNet6.Application.Services.Interface;
 using ApiDotNet6.Domain.Validations;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
 
 namespace ApiDotNet6.Api.Controllers
 {
@@ -18,6 +20,7 @@ namespace ApiDotNet6.Api.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = UserRoles.PurchaseCreate)]
         public async Task<ActionResult> PostAsync([FromBody] PurchaseDTO purchaseDTO)
         {
             try
@@ -38,6 +41,7 @@ namespace ApiDotNet6.Api.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = UserRoles.PurchaseRead)]
         public async Task<ActionResult> GetAsync()
         {
             var result = await _purchaseService.GetAsync();
@@ -50,6 +54,7 @@ namespace ApiDotNet6.Api.Controllers
 
         [HttpGet]
         [Route("{id}")]
+        [Authorize(Roles = UserRoles.PurchaseRead)]
         public async Task<ActionResult> GetByIdAsync(int id)
         {
             var result = await _purchaseService.GetByIdAsync(id);
@@ -61,6 +66,7 @@ namespace ApiDotNet6.Api.Controllers
         }
 
         [HttpPut]
+        [Authorize(Roles = UserRoles.PurchaseUpdate)]
         public async Task<ActionResult> EditAsync([FromBody] PurchaseDTO purchaseDTO)
         {
             try
@@ -82,6 +88,7 @@ namespace ApiDotNet6.Api.Controllers
 
         [HttpDelete]
         [Route("{id}")]
+        [Authorize(Roles = UserRoles.PurchaseDelete)]
         public async Task<ActionResult> RemoveAsync(int id)
         {
             var result = await _purchaseService.DeleteAsync(id);

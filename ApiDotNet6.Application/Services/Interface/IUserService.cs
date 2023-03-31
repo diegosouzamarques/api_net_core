@@ -7,5 +7,6 @@ namespace ApiDotNet6.Application.Services.Interface
         Task<ResultService<UserDTO>> Register(UserDTO userDTO);
         Task<ResultService<TokenDTO>> Signin(UserSigninDTO userSigninDTO);
         Task<ResultService<TokenDTO>> RefreshToken(RefreshTokenDTO refreshTokenDTO);
+        Task<ResultService<ICollection<PermissionDTO>>> PermissionAsync();
     }
 }

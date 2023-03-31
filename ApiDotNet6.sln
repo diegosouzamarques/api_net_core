@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiDotNet6.Domain", "ApiDotNet6.Domain\ApiDotNet6.Domain.csproj", "{7143BDE7-2150-42B7-BC2E-8D8B7573B47A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiDotNet6.Domain", "ApiDotNet6.Domain\ApiDotNet6.Domain.csproj", "{7143BDE7-2150-42B7-BC2E-8D8B7573B47A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiDotNet6.Infra.Data", "ApiDotNet6.Infra.Data\ApiDotNet6.Infra.Data.csproj", "{5C7ABF9B-8582-4542-AA50-DB3C12F39ECD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiDotNet6.Infra.Data", "ApiDotNet6.Infra.Data\ApiDotNet6.Infra.Data.csproj", "{5C7ABF9B-8582-4542-AA50-DB3C12F39ECD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiDotNet6.Application", "ApiDotNet6.Application\ApiDotNet6.Application.csproj", "{2B8D0BE1-EFAA-405B-B321-5E8AAFDD9D15}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiDotNet6.Application", "ApiDotNet6.Application\ApiDotNet6.Application.csproj", "{2B8D0BE1-EFAA-405B-B321-5E8AAFDD9D15}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiDotNet6.Infra.Ioc", "ApiDotNet6.Infra.Ioc\ApiDotNet6.Infra.Ioc.csproj", "{32794BD8-0D60-45A1-A995-03B8DC19BFEB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiDotNet6.Infra.Ioc", "ApiDotNet6.Infra.Ioc\ApiDotNet6.Infra.Ioc.csproj", "{32794BD8-0D60-45A1-A995-03B8DC19BFEB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiDotNet6.Api", "ApiDotNet6.Api\ApiDotNet6.Api.csproj", "{CD3BC740-79A3-4BDF-B7BE-E1BCCE484ECF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiDotNet6.Api", "ApiDotNet6.Api\ApiDotNet6.Api.csproj", "{CD3BC740-79A3-4BDF-B7BE-E1BCCE484ECF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

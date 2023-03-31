@@ -1,6 +1,9 @@
 ﻿using ApiDotNet6.Application.DTOs;
+using ApiDotNet6.Application.Services;
 using ApiDotNet6.Application.Services.Interface;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
 
 namespace ApiDotNet6.Api.Controllers
 {
@@ -53,6 +56,18 @@ namespace ApiDotNet6.Api.Controllers
 
             return BadRequest(result);
 
+        }
+
+
+        [HttpGet]
+        [Route("getpermission")]
+        public async Task<IActionResult> GetAsync()
+        {
+            var result = await _userService.PermissionAsync();
+            if (result.IsSuccess)
+                return Ok(result);
+
+            return BadRequest(result);
         }
     }
 }

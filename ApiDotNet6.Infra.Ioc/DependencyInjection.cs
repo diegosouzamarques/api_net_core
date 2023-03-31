@@ -22,6 +22,7 @@ namespace ApiDotNet6.Infra.Ioc
             services.AddScoped<IPurchaseRepository, PurchaseRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IPermissionRepository, PermissionRepository>();
             services.AddScoped<IPersonImageRepository, PersonImageRepository>();
             services.AddScoped<ISavePersonImage, SavePersonImage>();
 

@@ -19,32 +19,30 @@ namespace ApiDotNet6.Infra.Data.Maps
                    .HasColumnName("email");
 
             builder.Property(x => x.Username)
-                   .HasColumnName("username");
+                   .HasColumnName("nomeusuario");
 
             builder.Property(x => x.Password)
                    .HasColumnName("senha");
 
             builder.Property(x => x.PasswordHash)
                    .HasColumnType("bytea")
-                   .HasColumnName("passwordhash");
+                   .HasColumnName("senhahash");
 
             builder.Property(x => x.PasswordSalt)
                    .HasColumnType("bytea")
-                   .HasColumnName("passwordsalt");
+                   .HasColumnName("senhasalt");
 
-            builder.Property(x => x.Role)
-                   .HasColumnName("role");
 
             builder.Property(x => x.RefreshToken)
                    .HasColumnName("refreshtoken");
 
             builder.Property(x => x.DateCreated)
                    .HasColumnType("timestamp")
-                   .HasColumnName("datecreated");
+                   .HasColumnName("datacriacao");
 
             builder.Property(x => x.TokenExpires)
                    .HasColumnType("timestamp")
-                   .HasColumnName("tokenexpires");
+                   .HasColumnName("tokenexpiracao");
 
 
             builder.HasMany(x => x.UserPermissions)

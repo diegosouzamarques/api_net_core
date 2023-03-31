@@ -4,22 +4,35 @@ using ApiDotNet6.Application.Services.Interface;
 using ApiDotNet6.Domain.Entities;
 using ApiDotNet6.Domain.Repositories;
 using AutoMapper;
+using System.Linq;
 
 namespace ApiDotNet6.Application.Services
 {
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
+        private readonly IPermissionRepository _permissionRepository;
         private readonly IGenerateToken _tokenGenerator;
         private readonly IMapper _mapper;
         private readonly IPasswordHash _passwordHashService;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public UserService(IUserRepository userRepository, IGenerateToken tokenGenerator, IMapper mapper, IPasswordHash passwordHash)
+        public UserService(IUserRepository userRepository, IGenerateToken tokenGenerator, IMapper mapper, IPasswordHash passwordHash, IPermissionRepository permissionRepository, IUnitOfWork unitOfWork)
         {
             _userRepository = userRepository;
             _tokenGenerator = tokenGenerator;  
             _mapper = mapper;
             _passwordHashService = passwordHash;
+            _permissionRepository = permissionRepository;
+            _unitOfWork = unitOfWork;
+        }
+
+        public async Task<ResultService<ICollection<PermissionDTO>>> PermissionAsync()
+        {
+
+            var permissions = await _permissionRepository.GetPermissionAsync();
+            return ResultService.Ok(_mapper.Map<ICollection<PermissionDTO>>(permissions));
+            
         }
 
         public async Task<ResultService<TokenDTO>> RefreshToken(RefreshTokenDTO refreshTokenDTO)
@@ -61,13 +74,34 @@ namespace ApiDotNet6.Application.Services
             var exisitingUser = await _userRepository.GetUserByUsernameAsync(userDTO.Username);
             if (exisitingUser != null)
                 return ResultService.Fail<UserDTO>("Nome de usuário já cadastrado.");
-         
+
+            var existPermission = await _permissionRepository.GetExistAsync(userDTO.Permissions);
+            if (existPermission.Count <= 0)
+                return ResultService.Fail<UserDTO>("Nenhuma permissão informada existente.");
+
             _passwordHashService.HashPassword(userDTO.Password!, out byte[] passwordHash, out byte[] passwordSalt);
-            var user = new User(userDTO.Email, userDTO.Password, userDTO.Username, passwordHash, passwordSalt, userDTO.Role);
+            var user = new User(userDTO.Email, userDTO.Password, userDTO.Username, passwordHash, passwordSalt);
 
-            var data = await _userRepository.CreateAsync(user);
-            return ResultService.Ok<UserDTO>(_mapper.Map<UserDTO>(data));
+            try {
+                await _unitOfWork.BeginTransaction();
 
+                var data = await _userRepository.CreateAsync(user);
+
+                existPermission.ToList().ForEach((permission) =>
+                {
+                    var permissionUser = new UserPermission(data.Id, permission.Id);
+                    data.UserPermissions.Add(permissionUser);
+                });
+
+                await _userRepository.EditAsync(data);
+              
+                await _unitOfWork.Commit();
+               
+                return ResultService.Ok<UserDTO>(userDTO);
+            } catch (Exception ex) {
+                await _unitOfWork.Rollback();
+                return ResultService.Fail<UserDTO>(ex.Message);
+            }     
         }
 
         public async Task<ResultService<TokenDTO>> Signin(UserSigninDTO userSigninDTO)

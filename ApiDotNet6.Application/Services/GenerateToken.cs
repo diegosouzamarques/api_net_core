@@ -21,11 +21,15 @@ namespace ApiDotNet6.Application.Services
 
         public TokenDTO GenerateAccessToken(User user)
         {
-            List<Claim> claims = new List<Claim>
+            List<Claim> claims = new List<Claim>();
+            
+            claims.Add(new Claim(ClaimTypes.Name, user.Username));
+
+            user.UserPermissions.ToList().ForEach(p =>
             {
-                new Claim(ClaimTypes.Name, user.Username),
-                new Claim("role", user.Role)
-            };
+                claims.Add(new Claim(ClaimTypes.Role, p.Permission.PermissionName));
+
+            });
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configure.GetSection("JwtConfig:Key").Value));
 

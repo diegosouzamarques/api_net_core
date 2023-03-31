@@ -25,6 +25,7 @@ namespace ApiDotNet6.Application.Mappings
                     return dto;
                 });
             CreateMap<User, UserDTO>();
+            CreateMap<Permission, PermissionDTO>();
         }
     }
 }

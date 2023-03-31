@@ -10,7 +10,6 @@ namespace ApiDotNet6.Domain.Entities
         public string Password { get; private set; }
         public byte[]? PasswordHash { get; private set; }
         public byte[]? PasswordSalt { get; private set; }
-        public string? Role { get; private set; }
         public string? RefreshToken { get; private set; }
         public DateTime? DateCreated { get; private set; }
         public DateTime? TokenExpires { get; private set; }
@@ -40,15 +39,13 @@ namespace ApiDotNet6.Domain.Entities
             UserPermissions = new List<UserPermission>();
         }
 
-        public User(string email, string password, string username, byte[]? passwordhash, byte[]? passwordsalt, string role)
+        public User(string email, string password, string username, byte[]? passwordhash, byte[]? passwordsalt)
         {
             Validation(email, password, username);
-            DomainValidationException.When(string.IsNullOrEmpty(role), "Regra de usuário deve ser informado");
             DomainValidationException.When(passwordhash?.Length <= 0, "Password hash deve ser informado");
             DomainValidationException.When(passwordsalt?.Length <= 0, "Password salt  deve ser informado");
             PasswordHash = passwordhash;
             PasswordSalt = passwordsalt;
-            Role = role;
             UserPermissions = new List<UserPermission>();
         }
 

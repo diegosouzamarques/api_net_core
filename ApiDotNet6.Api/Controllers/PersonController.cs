@@ -21,6 +21,7 @@ namespace ApiDotNet6.Api.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = UserRoles.PersonCreate)]
         public async Task<IActionResult> PostAsync([FromBody] PersonDTO personDTO)
         {
             var result = await _personService.CreateAsync(personDTO);
@@ -31,7 +32,7 @@ namespace ApiDotNet6.Api.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "teste")]   
+        [Authorize(Roles = UserRoles.PersonRead)]
         public async Task<IActionResult> GetAsync()
         {
             var result = await _personService.GetAsync();
@@ -43,6 +44,7 @@ namespace ApiDotNet6.Api.Controllers
 
         [HttpGet]
         [Route("{id}")]
+        [Authorize(Roles = UserRoles.PersonRead)]
         public async Task<IActionResult> GetByIdAsync(int id)
         {
             var result = await _personService.GetByIdAsync(id);
@@ -53,6 +55,7 @@ namespace ApiDotNet6.Api.Controllers
         }
 
         [HttpPut]
+        [Authorize(Roles = UserRoles.PersonUpdate)]
         public async Task<IActionResult> UpdateAsync([FromBody] PersonDTO personDTO)
         {
 
@@ -65,6 +68,7 @@ namespace ApiDotNet6.Api.Controllers
 
         [HttpDelete]
         [Route("{id}")]
+        [Authorize(Roles = UserRoles.PersonDelete)]
         public async Task<IActionResult> DeleteAsync(int id)
         {
 
@@ -77,6 +81,7 @@ namespace ApiDotNet6.Api.Controllers
 
         [HttpGet]
         [Route("paged")]
+        [Authorize(Roles = UserRoles.PersonRead)]
         public async Task<ActionResult> GetPagedAsync([FromQuery] PersonFilterDb personFilterDb)
         {
             var result = await _personService.GetPagedAsync(personFilterDb);

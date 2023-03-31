@@ -6,7 +6,11 @@ namespace ApiDotNet6.Application.DTOs
         public string Username { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
-        public string? Role { get; set; }
+        public List<int> Permissions { get; set; }
+
+        public UserDTO () {
+            Permissions = new List<int> ();
+        }
 
     }
 }

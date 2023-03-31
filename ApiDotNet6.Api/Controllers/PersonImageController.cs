@@ -1,6 +1,8 @@
 ﻿using ApiDotNet6.Application.DTOs;
 using ApiDotNet6.Application.Services.Interface;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
 
 namespace ApiDotNet6.Api.Controllers
 {
@@ -13,10 +15,10 @@ namespace ApiDotNet6.Api.Controllers
         public PersonImageController(IPersonImageService personImageService)  
         {
             _personImageService = personImageService;
-
         }
 
         [HttpPost]
+        [Authorize(Roles = UserRoles.Img64Create)]
         public async Task<ActionResult> CreateImageBase64Async(PersonImageDTO personImageDTO)
         {
             var result = await _personImageService.CreateImageBase64Async(personImageDTO);
@@ -28,6 +30,7 @@ namespace ApiDotNet6.Api.Controllers
 
         [HttpPost]
         [Route("pathimage")]
+        [Authorize(Roles = UserRoles.ImgBytesCreate)]
         public async Task<ActionResult> CreateImageAsync(PersonImageDTO personImageDTO)
         {
             var result = await _personImageService.CreateImageAsync(personImageDTO);

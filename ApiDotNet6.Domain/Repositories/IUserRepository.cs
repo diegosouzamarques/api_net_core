@@ -9,6 +9,7 @@ namespace ApiDotNet6.Domain.Repositories
         Task<User> CreateAsync(User user);
         Task<User> TokenRegisterAsync(User user);
         Task<User> GetUserByRefreshTokenAsync(string refreshTokenDTO);
+        Task<User> EditAsync(User user);
 
     }
 }

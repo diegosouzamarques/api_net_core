@@ -1,6 +1,8 @@
 ﻿using ApiDotNet6.Application.DTOs;
 using ApiDotNet6.Application.Services.Interface;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
 
 namespace ApiDotNet6.Api.Controllers
 {
@@ -16,6 +18,7 @@ namespace ApiDotNet6.Api.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = UserRoles.ProductCreate)]
         public async Task<ActionResult> PostAsync([FromBody] ProductDTO productDTO) { 
             var result = await _productService.CreateAsync(productDTO);
 
@@ -26,6 +29,7 @@ namespace ApiDotNet6.Api.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = UserRoles.ProductRead)]
         public async Task<ActionResult> GetAsync()
         {
             var result = await _productService.GetAsync();
@@ -37,6 +41,7 @@ namespace ApiDotNet6.Api.Controllers
 
         [HttpGet]
         [Route("{id}")]
+        [Authorize(Roles = UserRoles.ProductRead)]
         public async Task<ActionResult> GetByIdAsync(int id)
         {
             var result = await _productService.GetByIdAsync(id);
@@ -47,6 +52,7 @@ namespace ApiDotNet6.Api.Controllers
         }
 
         [HttpPut]
+        [Authorize(Roles = UserRoles.ProductUpdate)]
         public async Task<ActionResult> UpdateAsync([FromBody] ProductDTO productDTO)
         {
             var result = await _productService.UpdateAsync(productDTO);
@@ -58,6 +64,7 @@ namespace ApiDotNet6.Api.Controllers
 
         [HttpDelete]
         [Route("{id}")]
+        [Authorize(Roles = UserRoles.ProductDelete)]
         public async Task<ActionResult> DeleteAsync(int id)
         {
             var result = await _productService.DeleteAsync(id);

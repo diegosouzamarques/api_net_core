@@ -38,6 +38,8 @@ namespace ApiDotNet6.Infra.Data.Repositories
         public async Task<User?> GetUserByUsernameAsync(string username)
         {
             return await _appDbContext.Users
+                          .Include(x => x.UserPermissions)
+                          .ThenInclude(x => x.Permission)
                           .FirstOrDefaultAsync(x => x.Username == username);
         }
 
@@ -46,6 +48,14 @@ namespace ApiDotNet6.Infra.Data.Repositories
             _appDbContext.Update(user);
             await _appDbContext.SaveChangesAsync();
             return user;
+        }
+
+        public async Task<User> EditAsync(User user)
+        {
+            _appDbContext.Update(user);
+            await _appDbContext.SaveChangesAsync();
+            return user;
+
         }
     }
 }

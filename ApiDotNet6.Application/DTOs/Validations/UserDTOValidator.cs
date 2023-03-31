@@ -21,10 +21,14 @@ namespace ApiDotNet6.Application.DTOs.Validations
                 .NotEmpty()
                 .WithMessage("Password deve ser informado!");
 
-            RuleFor(x => x.Role)
-                .NotNull()
-                .NotEmpty()
-                .WithMessage("Password deve ser informado!");
+            RuleFor(x => x.Permissions)
+                .NotNull().WithMessage("Permissões deve ser informadas")
+                .Must(NotEqualZero).WithMessage("Deve pelo menos ter uma permissão informada");
+        }
+
+        private bool NotEqualZero(List<int> ints)
+        {
+            return ints.All(i => i != 0);
         }
 
     }
