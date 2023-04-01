@@ -9,6 +9,8 @@
         public const string PersonUpdate   = "EditaPessoa";
         public const string Img64Create    = "CadastrarImage64";
         public const string ImgBytesCreate = "CadastrarImageBytes";
+        public const string ImgPersonRead  = "BuscaImagens";
+        public const string ImgDownload    = "BaixarImagemPessoa";
         public const string ProductCreate  = "CadastraProduto";
         public const string ProductRead    = "BuscaProduto";
         public const string ProductUpdate  = "EditaProduto";

@@ -8,23 +8,21 @@ namespace ApiDotNet6.Infra.Data.Integrations
 
         public SavePersonImage()
         {
-            _filePath = "C:/Users/diego/OneDrive/Imagens/.netcore";
+            _filePath = "D:/ApiDotNetCore6/arquivos";
         }
 
-        public string Save(string imageBase64)
+        public string Save(byte[] file, string fileExt)
         {
-            var fileExt = imageBase64.Substring(imageBase64.IndexOf("/") + 1, 
-                                                imageBase64.IndexOf(";") - imageBase64.IndexOf("/") -1);
+         
+            BinaryWriter Writer = null;
 
-            var base64Code = imageBase64.Substring(imageBase64.IndexOf(",") + 1);
-            var imgByte = Convert.FromBase64String(base64Code);
             var fileName = Guid.NewGuid().ToString() + "." + fileExt;
 
-            using(var imageFile = new FileStream(_filePath+"/"+fileName, FileMode.Create))
-            {
-                imageFile.Write(imgByte, 0, imgByte.Length);
-                imageFile.Flush();
-            }
+            Writer = new BinaryWriter(File.OpenWrite(_filePath + "/" + fileName));               
+            Writer.Write(file);
+            Writer.Flush();
+            Writer.Close();
+
 
             return _filePath + "/" + fileName;
         }

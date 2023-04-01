@@ -3,6 +3,6 @@ namespace ApiDotNet6.Domain.Integrations
 {
     public interface ISavePersonImage
     {
-        string Save(string imageBase64);
+        string Save(byte[] file, string fileExt);
     }
 }

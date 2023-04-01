@@ -18,8 +18,8 @@ namespace ApiDotNet6.Infra.Data.Maps
             builder.Property<int>(x => x.PersonId)
                    .HasColumnName("idpessoa");
 
-            builder.Property(x => x.ImageBase)
-                   .HasColumnName("imagembase");
+            builder.Property(x => x.Description)
+                   .HasColumnName("imgdescription");
 
             builder.Property(x => x.ImageUri)
                    .HasColumnName("imagemurl");
