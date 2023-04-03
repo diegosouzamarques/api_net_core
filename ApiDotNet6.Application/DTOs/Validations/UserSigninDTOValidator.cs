@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using System.Text;
 
 namespace ApiDotNet6.Application.DTOs.Validations
 {
@@ -7,15 +8,30 @@ namespace ApiDotNet6.Application.DTOs.Validations
         public UserSigninDTOValidator()
         {
 
-            RuleFor(x => x.Username)
+            RuleFor(x => x.basicAutenticate)
                 .NotNull()
                 .NotEmpty()
-                .WithMessage("Nome de usuário deve ser informado!");
+                .WithMessage("Usuário e senha em Basic Autenticate deve ser informado!")
+                .Must(basicAutenticateOK).WithMessage("Usuário ou senha não informados!");
 
-            RuleFor(x => x.Password)
-                .NotNull()
-                .NotEmpty()
-                .WithMessage("Senha deve ser informado!");
+        }
+
+        private bool basicAutenticateOK(string basicAutenticate)
+        {
+            try
+            {
+                var credentialBytes = Convert.FromBase64String(basicAutenticate);
+                var credentials = Encoding.UTF8.GetString(credentialBytes).Split(new[] { ':' }, 2);
+
+                var username = credentials[0];
+                var password = credentials[1];
+
+                return !(string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password));
+            }catch
+            {
+                return false;
+            }
+            
         }
     }
  

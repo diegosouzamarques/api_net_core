@@ -2,7 +2,6 @@
 using ApiDotNet6.Application.Services.Interface;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Data;
 
 namespace ApiDotNet6.Api.Controllers
 {
@@ -14,16 +13,17 @@ namespace ApiDotNet6.Api.Controllers
 
         public ProductController(IProductService productService)
         {
-            _productService= productService;
+            _productService = productService;
         }
 
         [HttpPost]
         [Authorize(Roles = UserRoles.ProductCreate)]
-        public async Task<ActionResult> PostAsync([FromBody] ProductDTO productDTO) { 
+        public async Task<ActionResult> PostAsync([FromBody] ProductDTO productDTO)
+        {
             var result = await _productService.CreateAsync(productDTO);
 
-            if(result.IsSuccess)
-              return Ok(result);
+            if (result.IsSuccess)
+                return Ok(result);
 
             return BadRequest(result);
         }

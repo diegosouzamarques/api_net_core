@@ -12,7 +12,7 @@ namespace ApiDotNet6.Api.Controllers
     {
         private readonly IPersonImageService _personImageService;
 
-        public PersonImageController(IPersonImageService personImageService)  
+        public PersonImageController(IPersonImageService personImageService)
         {
             _personImageService = personImageService;
         }
@@ -22,10 +22,10 @@ namespace ApiDotNet6.Api.Controllers
         public async Task<ActionResult> CreateImageBase64Async(PersonImage64DTO personImageDTO)
         {
             var result = await _personImageService.CreateImageBase64Async(personImageDTO);
-           if(result.IsSuccess)
+            if (result.IsSuccess)
                 return Ok(result);
 
-           return BadRequest(result);
+            return BadRequest(result);
         }
 
         [HttpPost]
@@ -56,7 +56,8 @@ namespace ApiDotNet6.Api.Controllers
         [HttpGet]
         [Route("download/{idimg}")]
         [Authorize(Roles = UserRoles.ImgDownload)]
-        public async Task<ActionResult> DownloadImg(int idimg) {
+        public async Task<ActionResult> DownloadImg(int idimg)
+        {
 
             try
             {
@@ -68,8 +69,8 @@ namespace ApiDotNet6.Api.Controllers
 
                 return BadRequest(result);
             }
-       
-        
+
+
         }
 
     }

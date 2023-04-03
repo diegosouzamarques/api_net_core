@@ -5,6 +5,7 @@ using ApiDotNet6.Domain.Entities;
 using ApiDotNet6.Domain.Repositories;
 using AutoMapper;
 using System.Linq;
+using System.Text;
 
 namespace ApiDotNet6.Application.Services
 {
@@ -113,11 +114,17 @@ namespace ApiDotNet6.Application.Services
             if (!validator.IsValid)
                 return ResultService.RequestError<TokenDTO>("Problemas com a validadção", validator);
 
-            var exisitingUser = await _userRepository.GetUserByUsernameAsync(userSigninDTO.Username);
+            var credentialBytes = Convert.FromBase64String(userSigninDTO.basicAutenticate);
+            var credentials = Encoding.UTF8.GetString(credentialBytes).Split(new[] { ':' }, 2);
+
+            var username = credentials[0];
+            var password = credentials[1];
+
+            var exisitingUser = await _userRepository.GetUserByUsernameAsync(username);
             if (exisitingUser == null)
                 return ResultService.Fail<TokenDTO>("Usuário não encontrado.");
 
-            if (!_passwordHashService.VerifyPasssword(userSigninDTO.Password, exisitingUser.PasswordHash, exisitingUser.PasswordSalt))
+            if (!_passwordHashService.VerifyPasssword(password, exisitingUser.PasswordHash, exisitingUser.PasswordSalt))
                 return ResultService.Fail<TokenDTO>("Senha incorreta!");
 
             var userToken = _tokenGenerator.GenerateAccessToken(exisitingUser);

@@ -4,7 +4,6 @@ using ApiDotNet6.Application.Services.Interface;
 using ApiDotNet6.Domain.Validations;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Data;
 
 namespace ApiDotNet6.Api.Controllers
 {

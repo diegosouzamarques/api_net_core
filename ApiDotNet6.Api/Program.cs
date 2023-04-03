@@ -1,3 +1,4 @@
+using ApiDotNet6.Api.Middleware;
 using ApiDotNet6.Infra.Ioc;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -46,6 +47,7 @@ builder.Services.AddSwaggerGen(s =>
     });
 });
 
+builder.Services.AddCors();
 builder.Services.addInfrastructure(builder.Configuration);
 builder.Services.addServices(builder.Configuration);
 builder.Services.AddMvc().AddJsonOptions(options =>
@@ -77,12 +79,20 @@ builder.Services.AddAuthentication(authOptions =>
 
 var app = builder.Build();
 
+app.UseCors(x => x
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+            .SetIsOriginAllowed(origin => true)
+            .AllowCredentials());
+
+app.UseIPListAcessMiddleware();
+
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
+//if (app.Environment.IsDevelopment())
+//{
     app.UseSwagger();
     app.UseSwaggerUI();
-}
+//}
 
 app.UseHttpsRedirection();
 

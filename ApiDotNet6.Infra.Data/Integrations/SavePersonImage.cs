@@ -8,6 +8,8 @@ namespace ApiDotNet6.Infra.Data.Integrations
 
         public SavePersonImage()
         {
+            // exemplo path
+            // aws servie stoge img or idrive implements 
             _filePath = "D:/ApiDotNetCore6/arquivos";
         }
 

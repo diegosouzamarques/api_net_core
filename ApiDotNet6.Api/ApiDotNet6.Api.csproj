@@ -16,4 +16,14 @@
     <ProjectReference Include="..\ApiDotNet6.Infra.Ioc\ApiDotNet6.Infra.Ioc.csproj" />
   </ItemGroup>
 
+    <ItemGroup>
+	    <Content Include="Middleware\*.html">
+		    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	    </Content>
+    </ItemGroup>
+
+	<Target Name="CreateMiddlewareFolder" AfterTargets="AfterPublish">
+		<MakeDir Directories="$(PublishDir)Middleware" Condition="!Exists('$(PublishDir)Middleware')" />
+	</Target>	
+
 </Project>

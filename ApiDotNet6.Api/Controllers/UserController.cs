@@ -1,9 +1,6 @@
 ﻿using ApiDotNet6.Application.DTOs;
-using ApiDotNet6.Application.Services;
 using ApiDotNet6.Application.Services.Interface;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Data;
 
 namespace ApiDotNet6.Api.Controllers
 {
