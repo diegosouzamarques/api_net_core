@@ -20,6 +20,28 @@ namespace ApiDotNet6.Api.Controllers
             _personService = personService;
         }
 
+        #region Documentation
+        // POST api/Person
+        /// <summary>
+        /// Cria uma pessoa na entidade Person
+        /// </summary>
+        /// <remarks>
+        /// Exemplo:
+        ///
+        ///     POST
+        ///     {
+        ///       "name": "Diego Marques",
+        ///       "document": "546.408.010-41",
+        ///       "phone": "+55 84 97706-7368"
+        ///     }
+        ///
+        /// </remarks>
+        /// <response code="200">
+        /// Retorno será uma pessoa criada com seu código id 
+        /// </response>
+        /// <response code="400">Retorno com descrição do esta faltando na requisição
+        /// </response>  
+        #endregion
         [HttpPost]
         [Authorize(Roles = UserRoles.PersonCreate)]
         public async Task<IActionResult> PostAsync([FromBody] PersonDTO personDTO)
@@ -31,6 +53,17 @@ namespace ApiDotNet6.Api.Controllers
             return BadRequest(result);
         }
 
+        #region Documentation
+        // Get api/Person
+        /// <summary>
+        /// Busca todas as Pessoas Cadastradas
+        /// </summary>
+        /// <response code="200">
+        /// Retorno lista contendo todas as pessoas
+        /// </response>
+        /// <response code="400">Retorno com descrição do esta faltando na requisição
+        /// </response>  
+        #endregion
         [HttpGet]
         [Authorize(Roles = UserRoles.PersonRead)]
         public async Task<IActionResult> GetAsync()
@@ -42,6 +75,17 @@ namespace ApiDotNet6.Api.Controllers
             return BadRequest(result);
         }
 
+        #region Documentation
+        // Get api/Person/{id}
+        /// <summary>
+        /// Busca uma pessoa pelo código do ID
+        /// </summary>
+        /// <response code="200">
+        ///    Retorno da pessoa localizada pelo código ID
+        /// </response>
+        /// <response code="400">Retorno com descrição do esta faltando na requisição
+        /// </response>  
+        #endregion
         [HttpGet]
         [Route("{id}")]
         [Authorize(Roles = UserRoles.PersonRead)]
@@ -54,6 +98,29 @@ namespace ApiDotNet6.Api.Controllers
             return BadRequest(result);
         }
 
+        #region Documentation
+        // PUT api/Person
+        /// <summary>
+        /// Atualiza informações de uma pessoa na entidade Person
+        /// </summary>
+        /// <remarks>
+        /// Exemplo:
+        ///
+        ///     POST
+        ///     {
+        ///       "id": 5,
+        ///       "name": "Diego Marques",
+        ///       "document": "546.408.010-41",
+        ///       "phone": "+55 84 97706-7368"
+        ///     }
+        ///
+        /// </remarks>
+        /// <response code="200">
+        /// Retorno será a pessoa atualizad com as informações enviadas
+        /// </response>
+        /// <response code="400">Retorno com descrição do esta faltando na requisição
+        /// </response>  
+        #endregion
         [HttpPut]
         [Authorize(Roles = UserRoles.PersonUpdate)]
         public async Task<IActionResult> UpdateAsync([FromBody] PersonDTO personDTO)
@@ -66,6 +133,17 @@ namespace ApiDotNet6.Api.Controllers
             return BadRequest(result);
         }
 
+        #region Documentation
+        // Delete api/Person/{id}
+        /// <summary>
+        ///  Remove uma pessoa pelo código do ID
+        /// </summary>
+        /// <response code="200">
+        ///    Retorno será que pessoa foi removida com sucesso
+        /// </response>
+        /// <response code="400">Retorno com descrição do esta faltando na requisição
+        /// </response>  
+        #endregion
         [HttpDelete]
         [Route("{id}")]
         [Authorize(Roles = UserRoles.PersonDelete)]
@@ -79,6 +157,18 @@ namespace ApiDotNet6.Api.Controllers
             return BadRequest(result);
         }
 
+
+        #region Documentation
+        // Get api/Person
+        /// <summary>
+        /// Busca todas as Pessoas Cadastradas de forma páginada
+        /// </summary>
+        /// <response code="200">
+        /// Retorno lista contendo as pessoas da páginada solicitada
+        /// </response>
+        /// <response code="400">Retorno com descrição do esta faltando na requisição
+        /// </response>  
+        #endregion
         [HttpGet]
         [Route("paged")]
         [Authorize(Roles = UserRoles.PersonRead)]

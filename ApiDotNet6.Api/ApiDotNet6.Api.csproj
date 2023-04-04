@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -22,8 +22,17 @@
 	    </Content>
     </ItemGroup>
 
+    <ItemGroup>
+      <None Remove="Controllers\PersonImageController.cs~RF492c691.TMP" />
+    </ItemGroup>
+
 	<Target Name="CreateMiddlewareFolder" AfterTargets="AfterPublish">
 		<MakeDir Directories="$(PublishDir)Middleware" Condition="!Exists('$(PublishDir)Middleware')" />
-	</Target>	
+	</Target>
+
+	<PropertyGroup>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<NoWarn>$(NoWarn);1591</NoWarn>
+	</PropertyGroup>
 
 </Project>

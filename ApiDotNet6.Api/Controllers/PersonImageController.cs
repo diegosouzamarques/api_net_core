@@ -17,6 +17,28 @@ namespace ApiDotNet6.Api.Controllers
             _personImageService = personImageService;
         }
 
+        #region Documentation
+        // POST api/PersonImage
+        /// <summary>
+        /// Cria registro e armazenagem da imagem vinculada a uma pessoa
+        /// </summary>
+        /// <remarks>
+        /// Exemplo:
+        ///
+        ///     POST
+        ///     {
+        ///       "personId": "5",
+        ///       "description": "Foto de perfil",
+        ///       "image": "/9j/4AAQSkZJRgABAQAAAQAB... imagem em base64"
+        ///     }
+        ///
+        /// </remarks>
+        /// <response code="200">
+        /// Retorno será imagem registrada e armazenagem da imagem 
+        /// </response>
+        /// <response code="400">Retorno com descrição do esta faltando na requisição
+        /// </response>  
+        #endregion
         [HttpPost]
         [Authorize(Roles = UserRoles.Img64Create)]
         public async Task<ActionResult> CreateImageBase64Async(PersonImage64DTO personImageDTO)
@@ -28,6 +50,28 @@ namespace ApiDotNet6.Api.Controllers
             return BadRequest(result);
         }
 
+        #region Documentation
+        // POST api/PersonImage/pathimage
+        /// <summary>
+        /// Cria registro e armazenagem da imagem vinculada a uma pessoa
+        /// </summary>
+        /// <remarks>
+        /// Exemplo:
+        ///
+        ///     POST
+        ///     {
+        ///       "personId": "5",
+        ///       "description": "Foto de Perfil",
+        ///       "image": "imagem em bytes"
+        ///     }
+        ///
+        /// </remarks>
+        /// <response code="200">
+        /// Retorno será imagem registrada e armazenagem da imagem 
+        /// </response>
+        /// <response code="400">Retorno com descrição do esta faltando na requisição
+        /// </response>  
+        #endregion
         [HttpPost]
         [Route("pathimage")]
         [Authorize(Roles = UserRoles.ImgBytesCreate)]
@@ -40,6 +84,17 @@ namespace ApiDotNet6.Api.Controllers
             return BadRequest(result);
         }
 
+        #region Documentation
+        // Get api/PersonImage/{idperson}
+        /// <summary>
+        /// Busca todos registros de imagem de uma pessoa pelo código do ID
+        /// </summary>
+        /// <response code="200">
+        ///    Retorno será uma lista contendo todas as descrições das imagens da pessoa localizada pelo código ID
+        /// </response>
+        /// <response code="400">Retorno com descrição do esta faltando na requisição
+        /// </response>  
+        #endregion
         [HttpGet]
         [Route("{idperson}")]
         [Authorize(Roles = UserRoles.ImgPersonRead)]
@@ -53,6 +108,17 @@ namespace ApiDotNet6.Api.Controllers
         }
 
 
+        #region Documentation
+        // Get api/PersonImage/download/{idimg}
+        /// <summary>
+        /// Busca imagem localizada através do código id informado
+        /// </summary>
+        /// <response code="200">
+        ///    Retorno será download da imagem localizada
+        /// </response>
+        /// <response code="400">Retorno com descrição do esta faltando na requisição
+        /// </response>  
+        #endregion
         [HttpGet]
         [Route("download/{idimg}")]
         [Authorize(Roles = UserRoles.ImgDownload)]

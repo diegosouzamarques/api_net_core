@@ -3,6 +3,7 @@ using ApiDotNet6.Infra.Ioc;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System.Reflection;
 using System.Text;
 using System.Text.Json.Serialization;
 
@@ -19,7 +20,13 @@ builder.Services.AddSwaggerGen(s =>
     {
         Version = "v1",
         Title = "Api Dotnet 6",
-        Description = "Criando uma api .netCore 6"
+        Description = "Criando uma api .netCore 6",
+        Contact = new OpenApiContact
+        {
+            Name = "Diego Marques",
+            Email = "diegomarquesfatec@gmail.com",
+            Url = new Uri("https://www.diegosm.com.br/")
+        },
     });
     s.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
@@ -45,6 +52,10 @@ builder.Services.AddSwaggerGen(s =>
             new List<string>()
         }
     });
+
+    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    s.IncludeXmlComments(xmlPath);
 });
 
 builder.Services.AddCors();
@@ -87,12 +98,11 @@ app.UseCors(x => x
 
 app.UseIPListAcessMiddleware();
 
-// Configure the HTTP request pipeline.
-//if (app.Environment.IsDevelopment())
-//{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-//}
+app.UseSwagger();
+app.UseSwaggerUI(opt => { 
+    opt.SwaggerEndpoint("/swagger/v1/swagger.json", "Api Dotnet 6");
+    opt.RoutePrefix = ""; 
+});
 
 app.UseHttpsRedirection();
 

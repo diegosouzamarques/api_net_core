@@ -1,4 +1,6 @@
 ﻿
+using System.ComponentModel;
+
 namespace ApiDotNet6.Application.DTOs
 {
     public class UserSigninDTO

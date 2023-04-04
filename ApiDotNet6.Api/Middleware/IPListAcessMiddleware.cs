@@ -7,7 +7,7 @@ namespace ApiDotNet6.Api.Middleware
     public class IPListAcessMiddleware
     {
         private readonly RequestDelegate _next;
-        private readonly List<string> _iplist = new List<string>() { "::1", "127.0.0.1", "192.168.1.2", "192.168.1.3" };
+        private readonly List<string> _iplist = new List<string>() { "::1", "127.0.0.1", "192.168.1.2", "192.168.1.3", "168.195.210.12" };
 
         public IPListAcessMiddleware(RequestDelegate next)
         {

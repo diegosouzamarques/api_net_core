@@ -18,6 +18,27 @@ namespace ApiDotNet6.Api.Controllers
             _purchaseService = purchaseService;
         }
 
+        #region Documentation
+        // POST api/Purchase
+        /// <summary>
+        /// Cria uma compra na entidade Purchase
+        /// </summary>
+        /// <remarks>
+        /// Exemplo:
+        ///
+        ///     POST
+        ///     {
+        ///       "codErp": "20304050",
+        ///       "document": "546.408.010-41"   
+        ///     }
+        ///
+        /// </remarks>
+        /// <response code="200">
+        /// Retorno será uma compra criada com seu código id 
+        /// </response>
+        /// <response code="400">Retorno com descrição do esta faltando na requisição
+        /// </response>  
+        #endregion
         [HttpPost]
         [Authorize(Roles = UserRoles.PurchaseCreate)]
         public async Task<ActionResult> PostAsync([FromBody] PurchaseDTO purchaseDTO)
@@ -39,6 +60,17 @@ namespace ApiDotNet6.Api.Controllers
 
         }
 
+        #region Documentation
+        // Get api/Purchase
+        /// <summary>
+        /// Busca todas as compras Cadastradas
+        /// </summary>
+        /// <response code="200">
+        /// Retorno lista contendo todas as compras
+        /// </response>
+        /// <response code="400">Retorno com descrição do esta faltando na requisição
+        /// </response>  
+        #endregion
         [HttpGet]
         [Authorize(Roles = UserRoles.PurchaseRead)]
         public async Task<ActionResult> GetAsync()
@@ -51,6 +83,17 @@ namespace ApiDotNet6.Api.Controllers
 
         }
 
+        #region Documentation
+        // Get api/Purchase/{id}
+        /// <summary>
+        /// Busca uma compra pelo código do ID
+        /// </summary>
+        /// <response code="200">
+        ///    Retorno da compra localizada pelo código ID
+        /// </response>
+        /// <response code="400">Retorno com descrição do esta faltando na requisição
+        /// </response>  
+        #endregion
         [HttpGet]
         [Route("{id}")]
         [Authorize(Roles = UserRoles.PurchaseRead)]
@@ -64,6 +107,28 @@ namespace ApiDotNet6.Api.Controllers
 
         }
 
+        #region Documentation
+        // PUT api/Purchase
+        /// <summary>
+        /// Atualiza informações de uma compra na entidade Purchase
+        /// </summary>
+        /// <remarks>
+        /// Exemplo:
+        ///
+        ///     POST
+        ///     {
+        ///       "id": 5,
+        ///       "codErp": "20304050",
+        ///       "document": "546.408.010-41" 
+        ///     }
+        ///
+        /// </remarks>
+        /// <response code="200">
+        /// Retorno será a compra atualizada com as informações enviadas
+        /// </response>
+        /// <response code="400">Retorno com descrição do esta faltando na requisição
+        /// </response>  
+        #endregion
         [HttpPut]
         [Authorize(Roles = UserRoles.PurchaseUpdate)]
         public async Task<ActionResult> EditAsync([FromBody] PurchaseDTO purchaseDTO)
@@ -85,6 +150,17 @@ namespace ApiDotNet6.Api.Controllers
 
         }
 
+        #region Documentation
+        // Delete api/Purchase/{id}
+        /// <summary>
+        ///  Remove uma compra pelo código do ID
+        /// </summary>
+        /// <response code="200">
+        ///    Retorno será que compra foi removida com sucesso
+        /// </response>
+        /// <response code="400">Retorno com descrição do esta faltando na requisição
+        /// </response>  
+        #endregion
         [HttpDelete]
         [Route("{id}")]
         [Authorize(Roles = UserRoles.PurchaseDelete)]
