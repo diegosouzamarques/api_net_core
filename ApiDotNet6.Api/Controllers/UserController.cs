@@ -1,6 +1,7 @@
 ﻿using ApiDotNet6.Application.DTOs;
 using ApiDotNet6.Application.Services.Interface;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace ApiDotNet6.Api.Controllers
 {
@@ -31,13 +32,19 @@ namespace ApiDotNet6.Api.Controllers
         [Route("register")]
         public async Task<ActionResult> RegisterAsync([FromForm] UserDTO userDTO)
         {
+            try
+            {
+                var result = await _userService.Register(userDTO);
+                if (result.IsSuccess)
+                    return Ok(result.Data);
 
-            var result = await _userService.Register(userDTO);
-            if (result.IsSuccess)
-                return Ok(result.Data);
-
-            return BadRequest(result);
-
+                return BadRequest(result);
+            }
+            catch (Exception ex)
+            {
+                var result = StatusCode(StatusCodes.Status500InternalServerError, ex.GetaAllMessages());
+                return result;
+            }
         }
 
         #region Documentation
@@ -56,12 +63,20 @@ namespace ApiDotNet6.Api.Controllers
         [Route("signin")]
         public async Task<ActionResult> SigninAsync([FromForm] UserSigninDTO userDTO)
         {
+            try {
 
-            var result = await _userService.Signin(userDTO);
-            if (result.IsSuccess)
-                return Ok(result.Data);
+                var result = await _userService.Signin(userDTO);
+                if (result.IsSuccess)
+                    return Ok(result.Data);
 
-            return BadRequest(result);
+                return BadRequest(result);
+
+            }
+            catch(Exception ex)
+            {
+                var result = StatusCode(StatusCodes.Status500InternalServerError, ex.GetaAllMessages());
+                return result;
+            }
 
         }
 
@@ -80,12 +95,19 @@ namespace ApiDotNet6.Api.Controllers
         [Route("refreshtoken")]
         public async Task<ActionResult> RefreshTokenAsync([FromForm] RefreshTokenDTO refreshTokenDTO)
         {
+            try
+            {
+                var result = await _userService.RefreshToken(refreshTokenDTO);
+                if (result.IsSuccess)
+                    return Ok(result.Data);
 
-            var result = await _userService.RefreshToken(refreshTokenDTO);
-            if (result.IsSuccess)
-                return Ok(result.Data);
-
-            return BadRequest(result);
+                return BadRequest(result);
+            }
+            catch (Exception ex)
+            {
+                var result = StatusCode(StatusCodes.Status500InternalServerError, ex.GetaAllMessages());
+                return result;
+            }
 
         }
 
@@ -103,13 +125,21 @@ namespace ApiDotNet6.Api.Controllers
         #endregion
         [HttpGet]
         [Route("getpermission")]
-        public async Task<IActionResult> GetAsync()
+        public async Task<ActionResult> GetAsync()
         {
-            var result = await _userService.PermissionAsync();
-            if (result.IsSuccess)
-                return Ok(result);
+            try
+            {
+                var result = await _userService.PermissionAsync();
+                if (result.IsSuccess)
+                    return Ok(result);
 
-            return BadRequest(result);
+                return BadRequest(result);
+            }
+            catch (Exception ex)
+            {
+                var result = StatusCode(StatusCodes.Status500InternalServerError, ex.GetaAllMessages());
+                return result;
+            }
         }
     }
 }

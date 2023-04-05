@@ -53,7 +53,7 @@ namespace ApiDotNet6.Api.Controllers
             }
             catch (DomainValidationException ex)
             {
-                var result = ResultService.Fail(ex.Message);
+                var result = ResultService.Fail(ex.GetaAllMessages());
 
                 return BadRequest(result);
             }
@@ -75,11 +75,19 @@ namespace ApiDotNet6.Api.Controllers
         [Authorize(Roles = UserRoles.PurchaseRead)]
         public async Task<ActionResult> GetAsync()
         {
-            var result = await _purchaseService.GetAsync();
-            if (result.IsSuccess)
-                return Ok(result);
+            try
+            {
+                var result = await _purchaseService.GetAsync();
+                if (result.IsSuccess)
+                    return Ok(result);
 
-            return BadRequest(result);
+                return BadRequest(result);
+            }
+            catch (Exception ex)
+            {
+                var result = StatusCode(StatusCodes.Status500InternalServerError, ex.GetaAllMessages());
+                return result;
+            }
 
         }
 
@@ -99,11 +107,19 @@ namespace ApiDotNet6.Api.Controllers
         [Authorize(Roles = UserRoles.PurchaseRead)]
         public async Task<ActionResult> GetByIdAsync(int id)
         {
-            var result = await _purchaseService.GetByIdAsync(id);
-            if (result.IsSuccess)
-                return Ok(result);
+            try
+            {
+                var result = await _purchaseService.GetByIdAsync(id);
+                if (result.IsSuccess)
+                    return Ok(result);
 
-            return BadRequest(result);
+                return BadRequest(result);
+            }
+            catch (Exception ex)
+            {
+                var result = StatusCode(StatusCodes.Status500InternalServerError, ex.GetaAllMessages());
+                return result;
+            }
 
         }
 
@@ -143,7 +159,7 @@ namespace ApiDotNet6.Api.Controllers
             }
             catch (DomainValidationException ex)
             {
-                var result = ResultService.Fail(ex.Message);
+                var result = ResultService.Fail(ex.GetaAllMessages());
 
                 return BadRequest(result);
             }
@@ -166,11 +182,19 @@ namespace ApiDotNet6.Api.Controllers
         [Authorize(Roles = UserRoles.PurchaseDelete)]
         public async Task<ActionResult> RemoveAsync(int id)
         {
-            var result = await _purchaseService.DeleteAsync(id);
-            if (result.IsSuccess)
-                return Ok(result);
+            try
+            {
+                var result = await _purchaseService.DeleteAsync(id);
+                if (result.IsSuccess)
+                    return Ok(result);
 
-            return BadRequest(result);
+                return BadRequest(result);
+            }
+            catch (Exception ex)
+            {
+                var result = StatusCode(StatusCodes.Status500InternalServerError, ex.GetaAllMessages());
+                return result;
+            }
 
         }
 

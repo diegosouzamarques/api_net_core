@@ -33,7 +33,11 @@ namespace ApiDotNet6.Domain.Entities
             DomainValidationException.When(string.IsNullOrEmpty(document), "Documento deve ser informado!");
             DomainValidationException.When(string.IsNullOrEmpty(phone), "Celular deve ser informado!");
 
-            Name= name;
+            DomainValidationException.When(name.Length > 100, "Nome máximo de 100 caracteres");
+            DomainValidationException.When(document.Length > 20, "Documento máximo de 20 caracteres");
+            DomainValidationException.When(phone.Length > 20, "Celular máximo de 20 caracteres");
+
+            Name = name;
             Document= document;
             Phone= phone;
         }

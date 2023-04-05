@@ -101,7 +101,8 @@ app.UseIPListAcessMiddleware();
 app.UseSwagger();
 app.UseSwaggerUI(opt => { 
     opt.SwaggerEndpoint("/swagger/v1/swagger.json", "Api Dotnet 6");
-    opt.RoutePrefix = ""; 
+    opt.RoutePrefix = "";
+    opt.DocumentTitle = "Api Dotnet 6";
 });
 
 app.UseHttpsRedirection();

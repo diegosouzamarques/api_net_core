@@ -42,12 +42,21 @@ namespace ApiDotNet6.Api.Controllers
         [Authorize(Roles = UserRoles.ProductCreate)]
         public async Task<ActionResult> PostAsync([FromBody] ProductDTO productDTO)
         {
-            var result = await _productService.CreateAsync(productDTO);
+            try
+            {
+                var result = await _productService.CreateAsync(productDTO);
 
-            if (result.IsSuccess)
-                return Ok(result);
+                if (result.IsSuccess)
+                    return Ok(result);
 
-            return BadRequest(result);
+                return BadRequest(result);
+            }
+            catch (Exception ex)
+            {
+                var result = StatusCode(StatusCodes.Status500InternalServerError, ex.GetaAllMessages());
+                return result;
+            }
+
         }
 
         #region Documentation
@@ -65,11 +74,20 @@ namespace ApiDotNet6.Api.Controllers
         [Authorize(Roles = UserRoles.ProductRead)]
         public async Task<ActionResult> GetAsync()
         {
-            var result = await _productService.GetAsync();
-            if (result.IsSuccess)
-                return Ok(result);
+            try
+            {
+                var result = await _productService.GetAsync();
+                if (result.IsSuccess)
+                    return Ok(result);
 
-            return BadRequest(result);
+                return BadRequest(result);
+            }
+            catch (Exception ex)
+            {
+                var result = StatusCode(StatusCodes.Status500InternalServerError, ex.GetaAllMessages());
+                return result;
+            }
+
         }
 
         #region Documentation
@@ -88,11 +106,19 @@ namespace ApiDotNet6.Api.Controllers
         [Authorize(Roles = UserRoles.ProductRead)]
         public async Task<ActionResult> GetByIdAsync(int id)
         {
-            var result = await _productService.GetByIdAsync(id);
-            if (result.IsSuccess)
-                return Ok(result);
+            try
+            {
+                var result = await _productService.GetByIdAsync(id);
+                if (result.IsSuccess)
+                    return Ok(result);
 
-            return BadRequest(result);
+                return BadRequest(result);
+            }
+            catch (Exception ex)
+            {
+                var result = StatusCode(StatusCodes.Status500InternalServerError, ex.GetaAllMessages());
+                return result;
+            }
         }
 
         #region Documentation
@@ -122,11 +148,19 @@ namespace ApiDotNet6.Api.Controllers
         [Authorize(Roles = UserRoles.ProductUpdate)]
         public async Task<ActionResult> UpdateAsync([FromBody] ProductDTO productDTO)
         {
-            var result = await _productService.UpdateAsync(productDTO);
-            if (result.IsSuccess)
-                return Ok(result);
+            try
+            {
+                var result = await _productService.UpdateAsync(productDTO);
+                if (result.IsSuccess)
+                    return Ok(result);
 
-            return BadRequest(result);
+                return BadRequest(result);
+            }
+            catch (Exception ex)
+            {
+                var result = StatusCode(StatusCodes.Status500InternalServerError, ex.GetaAllMessages());
+                return result;
+            }
         }
 
         #region Documentation
@@ -145,11 +179,19 @@ namespace ApiDotNet6.Api.Controllers
         [Authorize(Roles = UserRoles.ProductDelete)]
         public async Task<ActionResult> DeleteAsync(int id)
         {
-            var result = await _productService.DeleteAsync(id);
-            if (result.IsSuccess)
-                return Ok(result);
+            try
+            {
+                var result = await _productService.DeleteAsync(id);
+                if (result.IsSuccess)
+                    return Ok(result);
 
-            return BadRequest(result);
+                return BadRequest(result);
+            }
+            catch (Exception ex)
+            {
+                var result = StatusCode(StatusCodes.Status500InternalServerError, ex.GetaAllMessages());
+                return result;
+            }
         }
 
     }

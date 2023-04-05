@@ -55,6 +55,10 @@ namespace ApiDotNet6.Domain.Entities
             DomainValidationException.When(string.IsNullOrEmpty(email), "Email deve ser informado");
             DomainValidationException.When(string.IsNullOrEmpty(password), "Senha deve ser informado");
 
+            DomainValidationException.When(username.Length > 100, "Nome de usuário máximo de 100 caracteres");
+            DomainValidationException.When(email.Length > 100, "Email de usuário máximo de 100 caracteres");
+            DomainValidationException.When(password.Length > 200, "Senha de usuário máximo de 200 caracteres");
+
 
             Email = email;
             Password = password;

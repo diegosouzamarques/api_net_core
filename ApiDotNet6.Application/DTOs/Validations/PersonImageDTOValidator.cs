@@ -8,13 +8,15 @@ namespace ApiDotNet6.Application.DTOs.Validations
         public PersonImage64DTOValidator() {
 
             RuleFor(x => x.PersonId)
-            .GreaterThanOrEqualTo(0)
+            .LessThanOrEqualTo(0)
             .WithMessage("Id da pessoa deve ser informado!");
 
             RuleFor(x => x.Description)
             .NotNull()
             .NotEmpty()
-            .WithMessage("Imagem deve ser informado!");
+            .WithMessage("Descrição deve ser informado!")
+            .MaximumLength(200)
+            .WithMessage("Descrição máximo 200 caracteres");
 
             RuleFor(x => x.Image)
             .NotNull()

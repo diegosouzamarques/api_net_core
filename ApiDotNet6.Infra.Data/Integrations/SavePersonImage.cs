@@ -10,7 +10,7 @@ namespace ApiDotNet6.Infra.Data.Integrations
         {
             // exemplo path
             // aws servie stoge img or idrive implements 
-            _filePath = "D:/ApiDotNetCore6/arquivos";
+            _filePath = "C:/Users/Public/arquivos";
         }
 
         public string Save(byte[] file, string fileExt)

@@ -7,7 +7,7 @@ namespace ApiDotNet6.Api.Middleware
     public class IPListAcessMiddleware
     {
         private readonly RequestDelegate _next;
-        private readonly List<string> _iplist = new List<string>() { /*"::1",*/ "127.0.0.1", "192.168.1.2", "192.168.1.3", "168.195.210.12" };
+        private readonly List<string> _iplist = new List<string>() { "::1", "127.0.0.1", "192.168.1.2", "192.168.1.3", "168.195.210.12" };
 
         public IPListAcessMiddleware(RequestDelegate next)
         {
@@ -18,20 +18,22 @@ namespace ApiDotNet6.Api.Middleware
         public async Task Invoke(HttpContext httpContext)
         {
            
-            if (httpContext.Request.Path.Equals("/index.html") || httpContext.Request.Path.Equals("/swagger/v1/swagger.json"))
-            {
-                await _next(httpContext);
-            }
-            else
-            {
-                var remoteIpAddress = httpContext.Connection.RemoteIpAddress;
-                var ip = remoteIpAddress.ToString();
+            //if (httpContext.Request.Path.Equals("/index.html") || httpContext.Request.Path.Equals("/swagger/v1/swagger.json"))
+            //{
+            //    await _next(httpContext);
+            //}
+            //else
+            //{
+            //    var remoteIpAddress = httpContext.Connection.RemoteIpAddress;
+            //    var ip = remoteIpAddress.ToString();
 
-                if (!_iplist.Contains(ip))
-                    await ReturnErrorResponse(httpContext);
-                else
-                    await _next(httpContext);
-            }                
+            //    if (!_iplist.Contains(ip))
+            //        await ReturnErrorResponse(httpContext);
+            //    else
+            //        await _next(httpContext);
+            //}
+
+            await _next(httpContext);
         }
 
         private async Task ReturnErrorResponse(HttpContext context)

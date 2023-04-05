@@ -9,12 +9,16 @@ namespace ApiDotNet6.Application.DTOs.Validations
             RuleFor(x => x.CodErp)
                 .NotNull()
                 .NotEmpty()
-                .WithMessage("CodErp deve ser informado");
+                .WithMessage("CodErp deve ser informado")
+                .MaximumLength(10)
+                .WithMessage("CodErp máximo 10 caracteres");
 
             RuleFor(x => x.Name)
                 .NotNull()
                 .NotEmpty()
-                .WithMessage("Name deve ser informado");
+                .WithMessage("Nome deve ser informado")
+                .MaximumLength(100)
+                .WithMessage("Nome máximo 100 caracteres");
 
             RuleFor(x => x.Price)
                 .GreaterThan(0)

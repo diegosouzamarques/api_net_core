@@ -21,9 +21,12 @@ namespace ApiDotNet6.Application.Services
 
         public TokenDTO GenerateAccessToken(User user)
         {
-            List<Claim> claims = new List<Claim>();
-            
-            claims.Add(new Claim(ClaimTypes.Name, user.Username));
+            List<Claim> claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.Name, user.Username),
+                new Claim(ClaimTypes.Email, user.Email),
+                new Claim(ClaimTypes.SerialNumber, user.Id.ToString())
+            };
 
             user.UserPermissions.ToList().ForEach(p =>
             {
@@ -33,7 +36,7 @@ namespace ApiDotNet6.Application.Services
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configure.GetSection("JwtConfig:Key").Value));
 
-            var cred = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
+            var cred = new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature);
 
             var expires = DateTime.Now.AddHours(1);
 

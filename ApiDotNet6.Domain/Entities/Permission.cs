@@ -21,6 +21,9 @@ namespace ApiDotNet6.Domain.Entities
             DomainValidationException.When(string.IsNullOrEmpty(visualName), "NomeVisual dever ser informado");
             DomainValidationException.When(string.IsNullOrEmpty(permissionName), "Nome permissão dever ser informado");
 
+            DomainValidationException.When(visualName.Length > 200, "NomeVisual máximo de 200 caracteres");
+            DomainValidationException.When(permissionName.Length > 200, "Nome permissão máximo de 200 caracteres");
+
             VisualName = visualName;
             PermissionName = permissionName;
         }

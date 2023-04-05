@@ -30,6 +30,9 @@ namespace ApiDotNet6.Domain.Entities
             DomainValidationException.When(string.IsNullOrEmpty(codErp), "Codigo erp deve ser informado!");
             DomainValidationException.When(price < 0, "Preço deve ser informado!");
 
+            DomainValidationException.When(name.Length > 100, "Nome máximo de 100 caracteres");
+            DomainValidationException.When(codErp.Length > 100, "Codigo erp máximo de 100 caracteres");
+
             Name = name;
             CodErp = codErp;
             Price = price;

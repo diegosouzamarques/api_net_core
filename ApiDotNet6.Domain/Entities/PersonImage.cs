@@ -1,4 +1,5 @@
 ﻿using ApiDotNet6.Domain.Validations;
+using System.Numerics;
 
 namespace ApiDotNet6.Domain.Entities
 {
@@ -22,6 +23,8 @@ namespace ApiDotNet6.Domain.Entities
         {
             DomainValidationException.When(personId <= 0, "Id da pessoa dever ser informado");
             DomainValidationException.When(string.IsNullOrEmpty(description), "Descrição da imagem dever ser informado");
+            DomainValidationException.When(description.Length > 200, "Descrição máximo de 200 caracteres");
+
             Description = description;
             PersonId  = personId;        
   

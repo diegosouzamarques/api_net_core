@@ -43,11 +43,19 @@ namespace ApiDotNet6.Api.Controllers
         [Authorize(Roles = UserRoles.Img64Create)]
         public async Task<ActionResult> CreateImageBase64Async(PersonImage64DTO personImageDTO)
         {
-            var result = await _personImageService.CreateImageBase64Async(personImageDTO);
-            if (result.IsSuccess)
-                return Ok(result);
+            try
+            {
+                var result = await _personImageService.CreateImageBase64Async(personImageDTO);
+                if (result.IsSuccess)
+                    return Ok(result);
 
-            return BadRequest(result);
+                return BadRequest(result);
+            }
+            catch (Exception ex)
+            {
+                var result = StatusCode(StatusCodes.Status500InternalServerError, ex.GetaAllMessages());
+                return result;
+            }
         }
 
         #region Documentation
@@ -77,11 +85,21 @@ namespace ApiDotNet6.Api.Controllers
         [Authorize(Roles = UserRoles.ImgBytesCreate)]
         public async Task<ActionResult> CreateImageAsync([FromForm] PersonImageFileDTO personImageDTO)
         {
-            var result = await _personImageService.CreateImageAsync(personImageDTO);
-            if (result.IsSuccess)
-                return Ok(result);
 
-            return BadRequest(result);
+            try
+            {
+                var result = await _personImageService.CreateImageAsync(personImageDTO);
+                if (result.IsSuccess)
+                    return Ok(result);
+
+                return BadRequest(result);
+            }
+            catch (Exception ex)
+            {
+                var result = StatusCode(StatusCodes.Status500InternalServerError, ex.GetaAllMessages());
+                return result;
+            }
+
         }
 
         #region Documentation
@@ -100,11 +118,19 @@ namespace ApiDotNet6.Api.Controllers
         [Authorize(Roles = UserRoles.ImgPersonRead)]
         public async Task<ActionResult> GetByIdAsync(int idperson)
         {
-            var result = await _personImageService.GetPersonImageAsync(idperson);
-            if (result.IsSuccess)
-                return Ok(result);
+            try
+            {
+                var result = await _personImageService.GetPersonImageAsync(idperson);
+                if (result.IsSuccess)
+                    return Ok(result);
 
-            return BadRequest(result);
+                return BadRequest(result);
+            }
+            catch (Exception ex)
+            {
+                var result = StatusCode(StatusCodes.Status500InternalServerError, ex.GetaAllMessages());
+                return result;
+            }
         }
 
 
@@ -131,7 +157,7 @@ namespace ApiDotNet6.Api.Controllers
             }
             catch (Exception ex)
             {
-                var result = ResultService.Fail(ex.Message);
+                var result = ResultService.Fail(ex.GetaAllMessages());
 
                 return BadRequest(result);
             }
