@@ -66,6 +66,9 @@ project.fragment.lock.json
 artifacts/
 **/Properties/launchSettings.json
 
+**/appsettings.Development.json
+**/appsettings.Production.json
+
 # Visual Studio profiler
 *.psess
 *.vsp
@@ -98,3 +101,4 @@ PublishScripts/
 
 # Others
 *.publishsettings
+/ApiDotNet6.Api/appsettings.Development.json
